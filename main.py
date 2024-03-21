@@ -1,7 +1,13 @@
-def hBatchSum(w0,w1,dataSet):
+def hBatchSum0(w0,w1,dataSet):
     sum=0
     for x,y in dataSet:
         sum=sum+(y-(w0+w1*x))
+    return sum
+
+def hBatchSum1(w0,w1,dataSet):
+    sum=0
+    for x,y in dataSet:
+        sum=sum+((y-(w0+w1*x))*x)
     return sum
 
 def batch(dataSet):
@@ -15,9 +21,8 @@ def batch(dataSet):
         if (abs(w0-w0prev)>pow(10,-10) and abs(w1-w1prev)>pow(10,-10))and(iteration<10000000):
             w0prev=w0
             w1prev=w1
-            hSum=alp*hBatchSum(w0prev,w1prev,dataSet)
-            w0 = w0prev + hSum
-            w1 = w1prev + hSum
+            w0 = w0prev + alp * hBatchSum0(w0prev,w1prev,dataSet)
+            w1 = w1prev + alp * hBatchSum1(w0prev,w1prev,dataSet)
             iteration+=1
         else:    
             return w0,w1,iteration
